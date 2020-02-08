@@ -1,0 +1,56 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/auth/{any}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7001
+        }
+      ],
+      "UpstreamPathTemplate": "/auth/{any}"
+    },
+    {
+      "DownstreamPathTemplate": "/profile/{any}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7001
+        }
+      ],
+      "UpstreamPathTemplate": "/profile/{any}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "jwtauth",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/courses",
+      "UpstreamPathTemplate": "/courses",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7004
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "jwtauth",
+        "AllowedScopes": []
+      },
+      // Here it is the instruction for the conversion of Claims
+      // to request Headers
+      "RouteClaimsRequirement": {
+        "UserType": "registered"
+      },
+      "AddHeadersToRequest": {
+        "UserId": "Claims[sub] > value"
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:44301"
+  }
+}
