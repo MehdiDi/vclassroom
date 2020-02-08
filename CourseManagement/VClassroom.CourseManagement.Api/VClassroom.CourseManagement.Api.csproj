@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VClassroom.CourseManagement.Application\VClassroom.CourseManagement.Application.csproj" />
+    <ProjectReference Include="..\VClassroom.CourseManagement.Infrastructor\VClassroom.CourseManagement.Infrastructor.csproj" />
+  </ItemGroup>
+
+
+</Project>
