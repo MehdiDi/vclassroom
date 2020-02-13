@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
 import { Form, Icon, Input, Button } from 'antd';
-import { hasErrors } from '../../Helpers/Form'
+import { hasErrors } from '../../Helpers/Form';
+import {login} from '../../Api/Auth'
 
 
 class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      
+    };
+  }
   componentDidMount() {
     // To disable submit button at the beginning.
     this.props.form.validateFields();
@@ -11,9 +18,16 @@ class Login extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields({}, async(err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        try{
+          const token = await login(values);
+          this.props.onLoggedIn(token);
+          this.props.redirect();
+        }
+        catch(ex) {
+          console.error(ex);
+        }
       }
     });
   };

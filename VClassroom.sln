@@ -7,17 +7,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VClassroom.Authentication.A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VClassroom.ApiGateway", "ApiGateway\VClassroom.ApiGateway\VClassroom.ApiGateway.csproj", "{C73C7E26-A4E9-4B1A-B0F6-B8BF0D78E40F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VClassroom.CourseManagement.Api", "CourseManagement\VClassroom.CourseManagement.Api\VClassroom.CourseManagement.Api.csproj", "{11D32917-D067-4ECF-AA0E-69C8D4D0B798}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VClassroom.CourseManagement.Api", "CourseManagement\VClassroom.CourseManagement.Api\VClassroom.CourseManagement.Api.csproj", "{11D32917-D067-4ECF-AA0E-69C8D4D0B798}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CourseManagement", "CourseManagement", "{DA182343-B722-4A11-A380-46CC2AAC8E19}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VClassroom.CourseManagement.Domain", "CourseManagement\VClassroom.CourseManagement.Domain\VClassroom.CourseManagement.Domain.csproj", "{C172A46E-1C2B-4A80-8F44-9AE574CDF441}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VClassroom.CourseManagement.Domain", "CourseManagement\VClassroom.CourseManagement.Domain\VClassroom.CourseManagement.Domain.csproj", "{C172A46E-1C2B-4A80-8F44-9AE574CDF441}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VClassroom.CourseManagement.Infrastructor", "CourseManagement\VClassroom.CourseManagement.Infrastructor\VClassroom.CourseManagement.Infrastructor.csproj", "{781D8630-65A8-47AF-8F36-9DEA43EBCD71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VClassroom.CourseManagement.Infrastructor", "CourseManagement\VClassroom.CourseManagement.Infrastructor\VClassroom.CourseManagement.Infrastructor.csproj", "{781D8630-65A8-47AF-8F36-9DEA43EBCD71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VClassroom.CourseManagement.Application", "CourseManagement\VClassroom.CourseManagement.Application\VClassroom.CourseManagement.Application.csproj", "{46EC388C-3D47-42AE-A97E-F8D294A0A6F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VClassroom.CourseManagement.Application", "CourseManagement\VClassroom.CourseManagement.Application\VClassroom.CourseManagement.Application.csproj", "{46EC388C-3D47-42AE-A97E-F8D294A0A6F6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{27789090-45AE-4624-8C64-BB4FA871B1C9}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authentication", "Authentication", "{18A35A04-7F21-48D0-871A-D3EAF36FCB10}"
 EndProject

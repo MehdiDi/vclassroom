@@ -1,11 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using VClassroom.CourseManagement.Api.Extensions;
 using VClassroom.CourseManagement.Application.Courses.Commands;
+using VClassroom.CourseManagement.Application.Courses.Queries;
+using VClassroom.CourseManagement.Application.Sessions.Commands;
 
 namespace VClassroom.CourseManagement.Api.Controllers
 {
@@ -26,8 +25,36 @@ namespace VClassroom.CourseManagement.Api.Controllers
             var userId = HttpContext.GetUserId();
             command.UserId = userId;
 
+            var course = await _mediator.Send(command);
+            return Created("/courses/" + course.Id, course);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var command = new DeleteCourseCommand { CourseId = id };
+            await _mediator.Send(command);
+            return Ok();
+        }
+        [HttpGet("")]
+        public async Task<IActionResult> Get([FromQuery]GetCoursesQuery query)
+        {
+            query.UserId = HttpContext.GetUserId();
+
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+        [HttpPut("")]
+        public async Task<IActionResult> Update([FromBody]UpdateCourseCommand command)
+        {
+            command.UserId = HttpContext.GetUserId();
             var result = await _mediator.Send(command);
-            return Created("/courses/" + result, command);
+            return Ok(result);
+        }
+        [HttpPut("{courseId}/sessions")]
+        public async Task<IActionResult> UpdateSessions([FromBody]UpdateSessionsCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok();
         }
     }
 }

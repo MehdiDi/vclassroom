@@ -11,6 +11,5 @@ namespace VClassroom.CourseManagement.Domain.Entities
         public string UserId { get; set; }
         public int CourseId { get; set; }
         public Course Course { get; set; }
-        public CourseStatus Status { get; set; }
     }
 }

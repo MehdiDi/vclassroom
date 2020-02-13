@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -6,11 +7,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using VClassroom.CourseManagement.Application.Common.Interfaces;
+using VClassroom.CourseManagement.Application.Courses.Queries;
 using VClassroom.CourseManagement.Domain.Entities;
 
 namespace VClassroom.CourseManagement.Application.Courses.Commands
 {
-    public class CreateCourseCommand : IRequest<int>
+    public partial class CreateCourseCommand : IRequest<CourseDTO>
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -18,20 +20,22 @@ namespace VClassroom.CourseManagement.Application.Courses.Commands
         public IList<Session> Sessions { get; set; }
         public string UserId { get; set; }
 
-        public class CreateCourseCommandHandler : IRequestHandler<CreateCourseCommand, int>
+        public class CreateCourseCommandHandler : IRequestHandler<CreateCourseCommand, CourseDTO>
         {
             private readonly ICourseService _courseService;
             private ILogger<CreateCourseCommand> _logger;
+            private readonly IMapper _mapper;
 
-            public CreateCourseCommandHandler(ICourseService courseService, ILogger<CreateCourseCommand> logger)
+            public CreateCourseCommandHandler(ICourseService courseService, ILogger<CreateCourseCommand> logger, IMapper mapper)
             {
                 _courseService = courseService;
                 _logger = logger;
+                _mapper = mapper;
             }
 
-            public async Task<int> Handle(CreateCourseCommand request, CancellationToken cancellationToken)
+            public async Task<CourseDTO> Handle(CreateCourseCommand request, CancellationToken cancellationToken)
             {
-                _logger.LogInformation("New course created by user {0}", request.Id);
+                _logger.LogInformation("New course created by user {0}", request.UserId);
 
                 var entity = new Course
                 {
@@ -40,9 +44,10 @@ namespace VClassroom.CourseManagement.Application.Courses.Commands
                     Sessions = request.Sessions,
                     UserId = request.UserId
                 };
+
                 await _courseService.Create(entity);
-                
-                return entity.Id;
+
+                return _mapper.Map<CourseDTO>(entity);
             }
         }
     }

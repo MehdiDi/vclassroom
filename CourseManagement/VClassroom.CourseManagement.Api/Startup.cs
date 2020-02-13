@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using VClassroom.CourseManagement.Application;
 using VClassroom.CourseManagement.Infrastructor;
+using VClassroom.CourseManagement.Infrastructor.Presistance;
 
 namespace VClassroom.CourseManagement.Api
 {
@@ -40,8 +41,6 @@ namespace VClassroom.CourseManagement.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseAuthorization();
@@ -50,6 +49,7 @@ namespace VClassroom.CourseManagement.Api
             {
                 endpoints.MapControllers();
             });
+            MigrationHandler.MigrateOnStartup(app.ApplicationServices);
         }
     }
 }

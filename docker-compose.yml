@@ -1,0 +1,41 @@
+version: "3"
+services:
+    apigateway:
+        image: apigateway
+        build:
+            context: ./ApiGateway
+            dockerfile: Dockerfile
+        ports:
+            - "7000:80"
+        depends_on:
+            - db
+            - auth
+        volumes:
+            - ./ApiGateway/VClassroom.ApiGateway/bin/Release/netcoreapp3.1:/app
+    auth:
+        image: auth-service
+        hostname: auth
+        build:
+            context: ./Authentication
+            dockerfile: Dockerfile
+        ports:
+            - "7001:80"
+        depends_on:
+            - db
+    course-management:
+        image: course-management
+        hostname: course-management
+        build:
+            context: ./CourseManagement
+            dockerfile: Dockerfile
+        ports:
+            - "7002:80"
+        depends_on:
+            - db
+        volumes:
+            - ./CourseManagement/VClassroom.CourseManagement.Api/bin/Release/netcoreapp3.1:/app
+    db:
+        image: "mcr.microsoft.com/mssql/server"
+        environment:
+            SA_PASSWORD: "Mehdiidham123"
+            ACCEPT_EULA: "Y"

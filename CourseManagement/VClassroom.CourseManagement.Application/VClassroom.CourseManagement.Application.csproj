@@ -16,4 +16,8 @@
   <ItemGroup>
     <ProjectReference Include="..\VClassroom.CourseManagement.Domain\VClassroom.CourseManagement.Domain.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Sessions\Queries\" />
+  </ItemGroup>
 </Project>

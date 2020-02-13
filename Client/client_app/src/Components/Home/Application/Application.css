@@ -1,0 +1,16 @@
+.header {
+    height: 80px;
+    background-color: #ffffff;
+}
+.app-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.app-content {
+    border-radius: 20px !important;
+    width: 80%;
+    background: #F6FBFE;
+    min-height: calc(100vh - 80px);
+    padding: 20px;
+}

@@ -52,11 +52,17 @@ namespace VClassroom.CourseManagement.Infrastructor.Migrations
                     b.Property<int?>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Finish")
+                    b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Start")
+                    b.Property<int>("SessionStatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

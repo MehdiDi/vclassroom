@@ -32,5 +32,17 @@ class UserManager {
     getToken(){
         return this.token;
     }
+    getUser() {
+        return this.user;
+    }
+    logOut() {
+        this.user = null;
+        this.token = null;
+        localStorage.removeItem(this.keyName);
+    }
+    login(token) {
+        localStorage.setItem(this.keyName, token);
+        this.loadUser();
+    }
 }
 export default new UserManager("token");

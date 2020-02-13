@@ -1,0 +1,23 @@
+
+.bold {
+    font-weight: 700;
+}
+.main-button {
+    background: #57B9F5 !important;
+    color: #ffffff !important;
+    border-color: #57B9F5 !important;
+}
+.custom-modal {
+    z-index: 500000 !important;
+}
+.custom-modal .ant-modal-header,.custom-modal .ant-modal-footer {
+    display: none;
+}
+.form-title {
+    color: #566E99 !important;
+}
+.form-label {
+    color: #91A1BD;
+    font-size: 12px !important;
+    font-weight: 500;
+}

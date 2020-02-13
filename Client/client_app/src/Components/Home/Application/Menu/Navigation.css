@@ -1,0 +1,6 @@
+.ant-menu-item.ant-menu-item-selected {
+    background-color: white !important;
+}
+.ant-menu {
+    border-right: none;
+}

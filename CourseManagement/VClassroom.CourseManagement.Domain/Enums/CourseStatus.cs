@@ -4,11 +4,10 @@ using System.Text;
 
 namespace VClassroom.CourseManagement.Domain.Enums
 {
-    enum CourseStatus
+    public enum SessionStatus
     {
-        unset,
         waiting,
         started,
-        finished
+        closed
     }
 }

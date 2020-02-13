@@ -2,22 +2,22 @@
   "ReRoutes": [
     {
       "DownstreamPathTemplate": "/auth/{any}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7001
+          "Host": "auth",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/auth/{any}"
     },
     {
       "DownstreamPathTemplate": "/profile/{any}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7001
+          "Host": "auth",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/profile/{any}",
@@ -27,13 +27,13 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/courses",
-      "UpstreamPathTemplate": "/courses",
-      "DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/courses/",
+      "UpstreamPathTemplate": "/courses/",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7004
+          "Host": "course-management",
+          "Port": 80
         }
       ],
       "AuthenticationOptions": {
@@ -42,15 +42,61 @@
       },
       // Here it is the instruction for the conversion of Claims
       // to request Headers
-      "RouteClaimsRequirement": {
-        "UserType": "registered"
+
+      "AddHeadersToRequest": {
+        "UserId": "Claims[sub] > value"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/courses/{everything}",
+      "UpstreamPathTemplate": "/courses/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "course-management",
+          "Port": 80
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "jwtauth",
+        "AllowedScopes": []
       },
+      // Here it is the instruction for the conversion of Claims
+      // to request Headers
+
+      "AddHeadersToRequest": {
+        "UserId": "Claims[sub] > value"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/courses/{everything}/sessions",
+      "UpstreamPathTemplate": "/courses/{everything}/sessions",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "course-management",
+          "Port": 80
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "jwtauth",
+        "AllowedScopes": []
+      },
+      // Here it is the instruction for the conversion of Claims
+      // to request Headers
+
       "AddHeadersToRequest": {
         "UserId": "Claims[sub] > value"
       }
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:44301"
+    "BaseUrl": "https://localhost:7000"
+    //"ServiceDiscoveryProvider": {
+    //  "Host": "localhost",
+    //  "Port": 8500,
+    //  "Type": "PollConsul",
+    //  "PollingInterval": 100
+    //}
   }
 }

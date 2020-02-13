@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Ocelot.Provider.Consul;
 
 namespace VClassroom.ApiGateway
 {
@@ -27,7 +28,7 @@ namespace VClassroom.ApiGateway
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddOcelot(Configuration);
+            services.AddOcelot(Configuration).AddConsul();
 
             services.AddAuthentication(options =>
             {
@@ -81,8 +82,6 @@ namespace VClassroom.ApiGateway
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 

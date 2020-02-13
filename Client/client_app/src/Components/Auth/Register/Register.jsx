@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import { Form, Steps, Icon } from 'antd'
-import axios from 'axios'
 import Step1 from './Step1'
 import Step2 from './Step2'
 import { AddProfile} from '../../../Api/Profile'
+import { register } from '../../../Api/Auth'
 
 
 const  { Step } = Steps;
 
-const apiurl = process.env.REACT_APP_DEV_API;
 
 export class Register extends Component {
     constructor(props) {
@@ -31,16 +30,15 @@ export class Register extends Component {
             this.setState({index});
         }
         else {
+            this.props.redirect();
             console.log("Registeration Done!");
         }
     }
     handleRegister = async data => {
         try{
-            const response = await axios.post(apiurl + '/auth/register', {
-                ...data
-            });
+            const token = await register(data);
             
-            this.props.storeAccessToken(response.data.token);
+            this.props.onLoggedIn(token);
 
             this.next();
 

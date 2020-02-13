@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -44,6 +45,7 @@ namespace VClassroom.Authentication.Api
                     });
             });
 
+            
             services.Configure<MvcOptions>(options =>
             {
                 options.Filters.Add(new CorsAuthorizationFilterFactory("AllowAll"));
@@ -71,8 +73,6 @@ namespace VClassroom.Authentication.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Authentication Service v1");
             });
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseCors("AllowAll");
@@ -81,6 +81,15 @@ namespace VClassroom.Authentication.Api
             {
                 endpoints.MapControllers();
             });
+
+            using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var db = scope.ServiceProvider.GetService<ApplicationDbContext>().Database;
+                if (db.GetPendingMigrations().Any())
+                {
+                    db.Migrate();
+                }
+            }
         }
     }
 }
