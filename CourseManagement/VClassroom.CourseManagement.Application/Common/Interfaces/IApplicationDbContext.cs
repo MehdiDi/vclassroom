@@ -12,6 +12,7 @@ namespace VClassroom.CourseManagement.Application.Common.Interfaces
     {
         DbSet<Course> Courses { get; set; }
         DbSet<Session> Sessions { get; set; }
+        DbSet<Subscription> Subscriptions { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

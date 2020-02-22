@@ -15,5 +15,6 @@ namespace VClassroom.CourseManagement.Domain.Entities
         public IList<Session> Sessions { get; set; }
         [Required(ErrorMessage = "User is required")]
         public string UserId { get; set; }
+        public IEnumerable<Subscription> Subscriptions { get; set; }
     }
 }

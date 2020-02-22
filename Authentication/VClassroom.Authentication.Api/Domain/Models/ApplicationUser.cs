@@ -17,6 +17,7 @@ namespace VClassroom.Authentication.Api.Domain.Models
         [Required(ErrorMessage = "Address is required")]
         [MinLength(6, ErrorMessage ="Address must be valid")]
         public string Address { get; set; }
+        public int uId { get; set; }
 
     }
 }

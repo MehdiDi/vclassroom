@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using VClassroom.CourseManagement.Application.Common.Interfaces;
 using VClassroom.CourseManagement.Infrastructor.Presistance;
 using VClassroom.CourseManagement.Infrastructor.Services;
@@ -22,6 +23,9 @@ namespace VClassroom.CourseManagement.Infrastructor
             services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
             services.AddTransient<ICourseService, CourseService>();
             services.AddLogging();
+            //services.AddSingleton<ICourseStatusWorker, CourseStatusWorker>();
+            //services.AddHostedService(c => c.GetService<ICourseStatusWorker>());
+
         }
     }
 }

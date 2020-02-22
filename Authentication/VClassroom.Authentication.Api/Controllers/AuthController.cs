@@ -85,6 +85,7 @@ namespace VClassroom.Authentication.Api.Controllers
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("userName", user.UserName),
                 new Claim("email", user.Email),
+                new Claim("uid", user.uId.ToString()),
                 new Claim("UserType", "registered")
             };
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));

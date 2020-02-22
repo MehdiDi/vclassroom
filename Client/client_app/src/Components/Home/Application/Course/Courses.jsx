@@ -2,10 +2,13 @@ import React, { Component } from 'react'
 import './Courses.css'
 import {getCourses, createCourse, updateCourse, deleteCourse} from '../../../../Api/Course'
 import CourseItem from './CourseItem'
-import {Row, Col, Button} from 'antd'
+import {Row, Col, Button, message } from 'antd'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faPlusCircle, faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
 import CreateCourseModal from './CreateCourseModal'
+import SessionTimeTable from '../Sessions/SessionTimeTable'
+import {updateSessions} from '../../../../Api/Session'
+
 
 export class Courses extends Component {
     constructor(props) {
@@ -16,21 +19,26 @@ export class Courses extends Component {
             createModalVisible: false,
             courseActionLoading: false,
             editingId: null,
-
+            sessionCalendarVisible: false,
+            sessions: []
         }
         this.courseModalRef = React.createRef();
     }
     async componentDidMount() {
         const courses = await getCourses("title", null, 0, 10);
-        this.setState({courses, loading: false});
+        const sessions = this.getSessions(courses);
+        this.setState({courses, sessions, loading: false});
     }
     editCourse = id => {
         this.setState(() => ({
             editingId: id
         }), () => this.setCreateModalVisible(true));
-        
     }
-    
+    adjustForTimezone = (date) => {
+        var timeOffsetInMS = date.getTimezoneOffset() * 60000;
+        date.setTime(date.getTime() - timeOffsetInMS);
+        return date
+    }
     createCourse = async data => {
         this.setState({courseActionLoading: true});
         const course = await createCourse(data);
@@ -59,10 +67,8 @@ export class Courses extends Component {
         const newCourses = courses.filter(c => c.id !== id);
 
         await deleteCourse(id);
-        console.log(id, newCourses);
         this.setState({courses: newCourses});
     }
-
     setCreateModalVisible = value => {
         const id = value ? this.state.editingId : null;
         
@@ -90,8 +96,53 @@ export class Courses extends Component {
             await this.createCourse(data);
         }
     }
-    openCalendar = async id => {
+    setCalendarVisible = value => {
+        this.setState(prevState => {
+            return {
+                sessionCalendarVisible: value
+            }
+        });
+    }
+    getSessions = courses => {
+        let sessions = [];
+        
 
+        for (let i = 0; i < courses.length; i++) {
+            const sessionMap = courses[i].sessions.map(s => ({
+                id: s.id,
+                start: this.adjustForTimezone(new Date(s.start)),
+                end: this.adjustForTimezone(new Date(s.end)),
+                title: s.title,
+                sessionStatus: s.sessionStatus,
+                courseId: s.courseId
+            }));
+            sessions = sessions.concat(sessionMap);
+        }
+        return sessions;
+    }
+    saveSessions = async data => {
+        await updateSessions(data);
+        this.setCalendarVisible(false);
+        message.success({content: 'Saved'});
+
+    }
+    addSession = session => {
+        this.setState({
+            sessions: [...this.state.sessions, session]
+        })
+    }
+    removeSession = session => {
+        const sessions =  this.state.sessions.filter(s => s !== session);
+        this.setState({
+            sessions
+        })
+    }
+    closeSessionCalendar = () => {
+        const sessions = this.getSessions(this.state.courses);
+        this.setState({
+            sessions,
+            sessionCalendarVisible: false
+        });
     }
     render() {
         const courseMap = this.state.courses.map(c =>
@@ -106,6 +157,23 @@ export class Courses extends Component {
                         <FontAwesomeIcon size="1x" icon={faPlusCircle} /> &nbsp;
                         Create Course
                     </Button>
+                    &nbsp;
+                    <Button className="main-button" type="primary" onClick={() => this.setCalendarVisible(true)}>
+                        <FontAwesomeIcon size="1x" icon={faCalendarAlt} /> &nbsp;
+                        Manage Schedule
+                    </Button>
+                </div>
+                <div>
+                    <SessionTimeTable onCancel={() => this.setCalendarVisible(false)}
+                        onOk={this.onSessionsSubmit}
+                        close={this.closeSessionCalendar}
+                        visible={this.state.sessionCalendarVisible}
+                        courses={this.state.courses}
+                        sessions={this.state.sessions}
+                        saveSessions={this.saveSessions}
+                        addSession={this.addSession}
+                        removeSession={this.removeSession}
+                    />
                 </div>
                 <Row>
                     {courseMap}

@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using VClassroom.CourseManagement.Api.Extensions;
 using VClassroom.CourseManagement.Application.Courses.Commands;
 using VClassroom.CourseManagement.Application.Courses.Queries;
-using VClassroom.CourseManagement.Application.Sessions.Commands;
 
 namespace VClassroom.CourseManagement.Api.Controllers
 {
@@ -50,11 +49,11 @@ namespace VClassroom.CourseManagement.Api.Controllers
             var result = await _mediator.Send(command);
             return Ok(result);
         }
-        [HttpPut("{courseId}/sessions")]
-        public async Task<IActionResult> UpdateSessions([FromBody]UpdateSessionsCommand command)
+        [HttpGet("all")]
+        public async Task<IActionResult> All([FromQuery]GetAllCoursesQuery query)
         {
-            await _mediator.Send(command);
-            return Ok();
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
     }
 }

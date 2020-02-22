@@ -1,0 +1,14 @@
+.calendar-container {
+    transition: 0.3s;
+    overflow: hidden;
+}
+.shown {
+    height: 75vh !important;
+}
+.hidden {
+    height: 0px !important;
+}
+.rbc-event {
+    background: white !important;
+    color: black;
+}

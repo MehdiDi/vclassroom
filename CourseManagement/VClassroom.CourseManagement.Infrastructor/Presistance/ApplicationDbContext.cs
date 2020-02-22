@@ -18,6 +18,7 @@ namespace VClassroom.CourseManagement.Infrastructor.Presistance
 
         public DbSet<Course> Courses { get; set; }
         public DbSet<Session> Sessions { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
 
 
     }

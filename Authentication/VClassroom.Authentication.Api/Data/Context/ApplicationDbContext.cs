@@ -16,6 +16,9 @@ namespace VClassroom.Authentication.Api.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<ApplicationUser>()
+                .Property(u => u.uId)
+                .ValueGeneratedOnAdd();
         }
         public DbSet<InstructorProfile> InstructorProfiles { get; set; }
     }

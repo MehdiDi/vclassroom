@@ -69,8 +69,72 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/courses/{everything}/sessions",
-      "UpstreamPathTemplate": "/courses/{everything}/sessions",
+      "DownstreamPathTemplate": "/sessions",
+      "UpstreamPathTemplate": "/sessions",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "course-management",
+          "Port": 80
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "jwtauth",
+        "AllowedScopes": []
+      },
+      // Here it is the instruction for the conversion of Claims
+      // to request Headers
+
+      "AddHeadersToRequest": {
+        "UserId": "Claims[sub] > value"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/sessions/{everything}",
+      "UpstreamPathTemplate": "/sessions/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "course-management",
+          "Port": 80
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "jwtauth",
+        "AllowedScopes": []
+      },
+      // Here it is the instruction for the conversion of Claims
+      // to request Headers
+
+      "AddHeadersToRequest": {
+        "UserId": "Claims[sub] > value"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/subscriptions",
+      "UpstreamPathTemplate": "/subscriptions",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "course-management",
+          "Port": 80
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "jwtauth",
+        "AllowedScopes": []
+      },
+      // Here it is the instruction for the conversion of Claims
+      // to request Headers
+
+      "AddHeadersToRequest": {
+        "UserId": "Claims[sub] > value"
+      }
+    },
+
+    {
+      "DownstreamPathTemplate": "/subscriptions/{everything}",
+      "UpstreamPathTemplate": "/subscriptions/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {

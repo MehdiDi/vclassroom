@@ -49,16 +49,16 @@ namespace VClassroom.CourseManagement.Infrastructor.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CourseId")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("EndTime")
+                    b.Property<DateTime>("End")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("SessionStatus")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("StartTime")
+                    b.Property<DateTime>("Start")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
@@ -71,11 +71,42 @@ namespace VClassroom.CourseManagement.Infrastructor.Migrations
                     b.ToTable("Sessions");
                 });
 
+            modelBuilder.Entity("VClassroom.CourseManagement.Domain.Entities.Subscription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("Subscriptions");
+                });
+
             modelBuilder.Entity("VClassroom.CourseManagement.Domain.Entities.Session", b =>
                 {
                     b.HasOne("VClassroom.CourseManagement.Domain.Entities.Course", null)
                         .WithMany("Sessions")
-                        .HasForeignKey("CourseId");
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("VClassroom.CourseManagement.Domain.Entities.Subscription", b =>
+                {
+                    b.HasOne("VClassroom.CourseManagement.Domain.Entities.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

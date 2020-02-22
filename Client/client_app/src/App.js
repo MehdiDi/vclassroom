@@ -6,6 +6,7 @@ import ProtectedRoute from './Components/Routes/ProtectedRoutes'
 import Application from './Components/Home/Application/Application'
 import Auth from './Components/Auth/Auth'
 import Logout from './Components/Auth/Logout'
+import Subscriptions from './Components/Home/Application/Subscriptions/Subscriptions'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <ProtectedRoute path="/home" component={Application} />
           <Route exact path="/auth" component={Auth} />
           <Route exact path="/logout" component={Logout}/>
+          <ProtectedRoute path="/subscriptions" component={Subscriptions} />
         </Switch>
       </Router>
     </div>

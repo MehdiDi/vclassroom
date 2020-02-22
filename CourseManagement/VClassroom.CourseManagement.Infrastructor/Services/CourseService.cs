@@ -23,6 +23,7 @@ namespace VClassroom.CourseManagement.Infrastructor.Services
         public async Task<Course> Create(Course course)
         {
             _context.Courses.Add(course);
+
             await _context.SaveChangesAsync();
             return course;
         }

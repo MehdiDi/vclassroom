@@ -1,6 +1,6 @@
 import axios from 'axios'
 import querystring from 'query-string';
-import getHeadersWithBearer from './Config'
+import getHeadersWithBearer from './Config';
 
 const apiurl = process.env.REACT_APP_DEV_API;
 
@@ -14,7 +14,12 @@ export const getCourses = async (sortby="", filter="", page, limit) => {
     };
     const qs = querystring.stringify(options);
 
-    const res = await axios.get(apiurl + '/courses?' + qs , getHeadersWithBearer());
+    const res = await axios.get(apiurl + '/courses?' + qs, getHeadersWithBearer());
+
+    return res.data;
+}
+export const getAllCourses = async () => {
+    const res = await axios.get(apiurl + '/courses/all', getHeadersWithBearer());
 
     return res.data;
 }

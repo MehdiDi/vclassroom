@@ -34,11 +34,7 @@ namespace VClassroom.CourseManagement.Application.Courses.Queries
             }
             public async Task<IEnumerable<CourseDTO>> Handle(GetCoursesQuery request, CancellationToken cancellationToken)
             {
-                _logger.LogInformation("Heyyyyyyy---------------------------------------------------");
-                _logger.LogInformation("User ==> {0}", request.UserId);
-                _logger.LogInformation("Sort by: " + request.SortBy);
                 var courses = await _courseService.GetAll(request.UserId, limit:request.Limit, request.Page, sortby:request.SortBy);
-
                 return _mapper.Map<IEnumerable<CourseDTO>>(courses);
             }
         }
